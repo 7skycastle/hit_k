@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+.env.*
+*.log
+client-dev.log
+client-dev.err.log
+server/uploads/tmp/
+server/uploads/company/*
+server/uploads/exam/*
+server/generated/crops/*
+server/generated/reports/*
+!server/uploads/company/.gitkeep
+!server/uploads/exam/.gitkeep
+!server/generated/crops/.gitkeep
+!server/generated/reports/.gitkeep

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "sample-company",
+    "title": "상상국어 실전 모의고사",
+    "type": "mock_exam",
+    "area": "common",
+    "round": "3회",
+    "publishMonth": "2026-05",
+    "description": "mock 샘플 회사 콘텐츠",
+    "fileName": "sample-company.pdf",
+    "originalPdfPath": "mock",
+    "imagePaths": [
+      "/generated/images/company/mock-page-1.svg",
+      "/generated/images/company/mock-page-2.svg",
+      "/generated/images/company/mock-page-3.svg"
+    ],
+    "createdAt": "2026-05-22T06:11:47.460Z"
+  }
+]

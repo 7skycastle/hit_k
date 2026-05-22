@@ -1,0 +1,15 @@
+[
+  {
+    "id": "sample-exam",
+    "title": "2026학년도 6월 평가원 국어",
+    "examDate": "2026-06-04",
+    "fileName": "sample-exam.pdf",
+    "originalPdfPath": "mock",
+    "imagePaths": [
+      "/generated/images/exam/mock-page-1.svg",
+      "/generated/images/exam/mock-page-2.svg",
+      "/generated/images/exam/mock-page-3.svg"
+    ],
+    "createdAt": "2026-05-22T06:11:47.457Z"
+  }
+]
