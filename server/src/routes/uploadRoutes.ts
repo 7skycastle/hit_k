@@ -3,7 +3,7 @@ import path from "node:path";
 import express from "express";
 import multer from "multer";
 import { v4 as uuid } from "uuid";
-import { createMockReport } from "../services/reportService.js";
+import { createReportFromUploads } from "../services/reportService.js";
 import { readJsonFile, serverRoot, writeJsonFile } from "../services/store.js";
 import { createMockPageImages, renderPdfToImages, saveUploadedPdf } from "../services/pdfService.js";
 import type { ContentFile, ExamFile } from "../services/types.js";
@@ -62,8 +62,13 @@ router.post("/exam/:examId/analyze", async (req, res) => {
   const exams = await readJsonFile<ExamFile[]>("examContents.json", []);
   const exam = exams.find((item) => item.id === req.params.examId);
   if (!exam) return res.status(404).json({ message: "Exam not found." });
-  const report = await createMockReport(exam.id, exam.title);
-  res.json(report);
+  try {
+    const report = await createReportFromUploads(exam.id, exam.title);
+    res.json(report);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to analyze exam.";
+    res.status(message === "No company content uploaded." ? 400 : 500).json({ message });
+  }
 });
 
 export default router;
