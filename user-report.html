@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>국어 콘텐츠 적중 맵 - 사용자 리포트</title>
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --card: #ffffff;
+        --ink: #111827;
+        --muted: #6b7280;
+        --blue: #2563eb;
+        --red: #dc2626;
+        --orange: #f97316;
+        --purple: #7c3aed;
+        --green: #059669;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Pretendard, "Noto Sans KR", "Segoe UI", Arial, sans-serif;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid #e5e7eb;
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .wrap {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: center;
+        padding: 18px 28px;
+      }
+
+      .brand {
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .tagline {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .print {
+        border: 0;
+        border-radius: 6px;
+        background: var(--ink);
+        color: white;
+        padding: 11px 16px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .hero,
+      .notice,
+      .case-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        background: var(--card);
+        box-shadow: 0 1px 2px rgba(17, 24, 39, 0.06);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 240px;
+        gap: 32px;
+        padding: 34px;
+      }
+
+      .eyebrow {
+        color: var(--blue);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      h1 {
+        margin: 10px 0 12px;
+        font-size: 34px;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 900px;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .score-panel {
+        border-radius: 10px;
+        background: var(--ink);
+        color: white;
+        padding: 24px;
+      }
+
+      .score-panel small {
+        color: #d1d5db;
+        font-weight: 800;
+      }
+
+      .score {
+        margin-top: 10px;
+        font-size: 58px;
+        font-weight: 1000;
+      }
+
+      .grades {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .grade-box {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f9fafb;
+        padding: 14px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 6px;
+        color: white;
+        padding: 7px 10px;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .S { background: var(--red); }
+      .A { background: var(--orange); }
+      .B { background: var(--purple); }
+      .C { background: var(--blue); }
+      .D { background: var(--green); }
+      .E { background: var(--muted); }
+
+      .grade-count {
+        margin-top: 10px;
+        font-size: 26px;
+        font-weight: 1000;
+      }
+
+      .notice {
+        margin: 22px 0;
+        padding: 18px 22px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .case-card {
+        margin: 28px 0;
+        padding: 30px;
+      }
+
+      .case-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 18px;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 20px;
+      }
+
+      .case-no {
+        color: var(--blue);
+        font-size: 14px;
+        font-weight: 1000;
+      }
+
+      h2 {
+        margin: 8px 0;
+        font-size: 26px;
+      }
+
+      .case-desc {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .chip {
+        border: 1px solid #dbeafe;
+        border-radius: 6px;
+        background: #eff6ff;
+        color: var(--blue);
+        padding: 7px 10px;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .compare {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+        margin-top: 24px;
+      }
+
+      .viewer-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .viewer-title small {
+        color: var(--muted);
+        font-weight: 900;
+      }
+
+      .viewer-title strong {
+        display: block;
+        margin-top: 3px;
+        font-size: 18px;
+      }
+
+      .question {
+        border-radius: 5px;
+        background: #f3f4f6;
+        color: #4b5563;
+        padding: 6px 9px;
+        font-size: 14px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .image-frame {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background: #f3f4f6;
+        padding: 12px;
+      }
+
+      .image-wrap {
+        position: relative;
+        margin: 0 auto;
+        max-width: 460px;
+        background: white;
+        box-shadow: 0 1px 8px rgba(17, 24, 39, 0.12);
+      }
+
+      .image-wrap img {
+        display: block;
+        width: 100%;
+      }
+
+      .hl {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .hl.box {
+        border: 4px solid;
+        border-radius: 3px;
+        background: rgba(37, 99, 235, 0.08);
+      }
+
+      .hl.underline {
+        border-bottom: 5px solid #facc15;
+      }
+
+      .hl.check {
+        display: grid;
+        place-items: center;
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 999px;
+        background: white;
+        color: var(--green);
+        font-size: 24px;
+        font-weight: 1000;
+        box-shadow: 0 2px 8px rgba(17, 24, 39, 0.18);
+      }
+
+      .hl.note {
+        border: 1px solid #9ca3af;
+        border-radius: 5px;
+        background: rgba(229, 231, 235, 0.9);
+        color: #4b5563;
+        padding: 4px 7px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .red { border-color: var(--red); }
+      .blue { border-color: var(--blue); }
+      .green { border-color: var(--green); }
+
+      .analysis {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .analysis-box {
+        border-radius: 8px;
+        background: #f9fafb;
+        padding: 22px;
+      }
+
+      .benefit {
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        background: #eff6ff;
+        padding: 22px;
+      }
+
+      h3 {
+        margin: 0 0 12px;
+        font-size: 17px;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      ul {
+        margin: 12px 0 0;
+        padding-left: 20px;
+        color: #374151;
+        line-height: 1.8;
+      }
+
+      .body-text {
+        color: #374151;
+        line-height: 1.8;
+      }
+
+      .caution {
+        margin-top: 18px;
+        border-top: 1px solid #bfdbfe;
+        padding-top: 14px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .compare,
+        .analysis {
+          grid-template-columns: 1fr;
+        }
+
+        .grades {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .case-head {
+          flex-direction: column;
+        }
+
+        .chips {
+          justify-content: flex-start;
+        }
+      }
+
+      @media print {
+        header,
+        .print {
+          display: none;
+        }
+
+        body {
+          background: white;
+        }
+
+        .case-card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="topbar">
+        <div>
+          <div class="brand">국어 콘텐츠 적중 맵</div>
+          <div class="tagline">단순 키워드 유사가 아니라, 실제 지문·작품·문항 구조·선지 판단 기준을 비교합니다.</div>
+        </div>
+        <button class="print" onclick="window.print()">PDF 캡처/인쇄</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">실사 근거 중심 적중 리포트</div>
+          <h1>2026학년도 6월 평가원 국어 적중 분석 리포트</h1>
+          <p class="lead">이 리포트는 단순 키워드 일치가 아니라, 실제 시험장에서 체감 가능한 작품·제재·핵심 개념·문항 구조·선지 판단 기준의 연결성을 분석합니다.</p>
+        </div>
+        <div class="score-panel">
+          <small>전체 연계 체감도</small>
+          <div class="score">73</div>
+          <small>총 6개 승인 케이스</small>
+        </div>
+      </section>
+
+      <section class="grades">
+        <div class="grade-box"><span class="badge S">S등급</span><div class="grade-count">1</div><small>케이스</small></div>
+        <div class="grade-box"><span class="badge A">A등급</span><div class="grade-count">1</div><small>케이스</small></div>
+        <div class="grade-box"><span class="badge B">B등급</span><div class="grade-count">2</div><small>케이스</small></div>
+        <div class="grade-box"><span class="badge C">C등급</span><div class="grade-count">1</div><small>케이스</small></div>
+        <div class="grade-box"><span class="badge D">D등급</span><div class="grade-count">1</div><small>케이스</small></div>
+        <div class="grade-box"><span class="badge E">E등급</span><div class="grade-count">0</div><small>케이스</small></div>
+      </section>
+
+      <section class="notice">본 분석은 동일 문항 출제를 의미하지 않습니다. 학생이 시험장에서 체감할 수 있는 연계 요소와 학습 효과를 분석한 자료입니다.</section>
+
+      <div id="cases"></div>
+    </main>
+
+    <script>
+      const cases = [
+        {
+          no: 1,
+          title: "문학 작품 직접 적중",
+          grade: "S",
+          score: 100,
+          similarity: 94,
+          hitType: "실전 체감 적중",
+          desc: "동일 작품 또는 매우 유사한 지문·제재가 있어 시험장에서 강하게 체감되는 연계입니다.",
+          summary: "평가원 문학 지문과 회사 콘텐츠가 동일 작품을 다루고 있으며, 인물 관계와 갈등 구조를 사전에 학습할 수 있는 형태로 구성되어 있습니다.",
+          points: ["동일 작품을 중심으로 인물 관계와 갈등 구조가 겹칩니다.", "작품의 핵심 장면을 사전에 읽어볼 수 있습니다.", "문항 선지에서 묻는 감상 기준을 미리 연습할 수 있습니다."],
+          benefit: "이 콘텐츠를 학습한 학생은 작품 이해 시간을 줄이고, 선지 판단에 더 많은 시간을 사용할 수 있었을 가능성이 높습니다.",
+          exam: "server/generated/images/exam/mock-page-1.svg",
+          company: "server/generated/images/company/mock-page-1.svg",
+          q: "21번",
+          cq: "3회 1쪽"
+        },
+        {
+          no: 2,
+          title: "독서 제재 확장 연계",
+          grade: "B",
+          score: 70,
+          similarity: 78,
+          hitType: "확장 연계 적중",
+          desc: "핵심 개념, 논점, 구조가 사전에 훈련된 확장형 연계입니다.",
+          summary: "평가원 독서 지문은 특정 개념의 작동 원리와 조건 변화에 따른 결과를 묻고 있습니다. 회사 콘텐츠는 동일 키워드를 단순 소개한 것이 아니라 해당 개념의 구조와 적용 방식을 훈련하도록 설계되어 있습니다.",
+          points: ["핵심 개념을 지문 안에서 적용하는 방식이 유사합니다.", "선지 판단에 필요한 근거 확인 절차가 겹칩니다.", "학생이 시험장에서 느끼는 낯섦을 줄이는 데 도움이 됩니다."],
+          benefit: "학생은 낯선 지문을 처음부터 해석하기보다, 이미 학습한 개념 구조 위에 세부 정보를 얹는 방식으로 접근할 수 있습니다.",
+          exam: "server/generated/images/exam/mock-page-2.svg",
+          company: "server/generated/images/company/mock-page-2.svg",
+          q: "22번",
+          cq: "3회 2쪽"
+        },
+        {
+          no: 3,
+          title: "보기 적용형 문항 구조 적중",
+          grade: "C",
+          score: 55,
+          similarity: 71,
+          hitType: "문항 구조 적중",
+          desc: "발문, 보기, 추론 방식, 비교 방식이 유사한 문항 구조 연계입니다.",
+          summary: "평가원 문항과 회사 콘텐츠 문항 모두 보기의 조건을 지문 개념에 적용하여 결과를 판단하게 하는 구조입니다.",
+          points: ["보기 조건을 지문 개념에 적용하는 절차가 유사합니다.", "결과 판단을 요구하는 발문 흐름이 겹칩니다.", "풀이 순서를 사전에 훈련할 수 있습니다."],
+          benefit: "보기 적용형 문제 풀이 절차를 사전에 훈련한 학생에게 유리합니다.",
+          exam: "server/generated/images/exam/mock-page-3.svg",
+          company: "server/generated/images/company/mock-page-3.svg",
+          q: "23번",
+          cq: "3회 3쪽"
+        },
+        {
+          no: 4,
+          title: "선지 함정 판단 기준 적중",
+          grade: "D",
+          score: 40,
+          similarity: 66,
+          hitType: "선지 판단 적중",
+          desc: "정답/오답 선지를 판단하는 기준이나 함정 구조가 유사한 연계입니다.",
+          summary: "두 문항 모두 원인과 결과의 관계를 바꾸어 오답 선지를 구성하는 방식이 유사합니다.",
+          points: ["오답 선지의 왜곡 방식이 유사합니다.", "원인과 결과 관계를 확인하는 기준이 겹칩니다.", "선지 판단의 확신을 높일 수 있습니다."],
+          benefit: "오답 선지의 왜곡 방식을 사전에 경험한 학생은 정답 판단의 확신을 높일 수 있습니다.",
+          exam: "server/generated/images/exam/mock-page-1.svg",
+          company: "server/generated/images/company/mock-page-1.svg",
+          q: "24번",
+          cq: "3회 1쪽"
+        },
+        {
+          no: 5,
+          title: "독서 배경지식 시간 단축 적중",
+          grade: "A",
+          score: 85,
+          similarity: 86,
+          hitType: "시간 단축 적중",
+          desc: "사전 학습으로 지문 이해 속도가 빨라질 가능성이 높은 연계입니다.",
+          summary: "회사 콘텐츠는 평가원 지문을 이해하는 데 필요한 배경지식과 용어를 사전에 다루고 있습니다.",
+          points: ["지문 진입에 필요한 용어 부담을 줄입니다.", "배경지식이 독해 초기 방향 설정에 도움을 줍니다.", "핵심 개념 파악 시간을 줄일 수 있습니다."],
+          benefit: "지문을 읽는 초기 부담이 줄어들고, 독해 시간이 단축될 가능성이 높습니다.",
+          exam: "server/generated/images/exam/mock-page-2.svg",
+          company: "server/generated/images/company/mock-page-2.svg",
+          q: "25번",
+          cq: "3회 2쪽"
+        },
+        {
+          no: 6,
+          title: "현대시 정서·표현 방식 연계",
+          grade: "B",
+          score: 70,
+          similarity: 75,
+          hitType: "확장 연계 적중",
+          desc: "핵심 개념, 논점, 구조가 사전에 훈련된 확장형 연계입니다.",
+          summary: "동일 작품은 아니지만 화자의 정서, 시적 상황, 표현 방식이 유사하여 문학 감상 기준을 사전에 훈련할 수 있습니다.",
+          points: ["화자의 정서 파악 기준이 유사합니다.", "시적 상황을 근거로 선지를 판단하는 방식이 겹칩니다.", "낯선 작품에도 비슷한 감상 틀을 적용할 수 있습니다."],
+          benefit: "학생은 작품을 완전히 낯설게 받아들이지 않고, 유사한 감상 틀을 적용할 수 있습니다.",
+          exam: "server/generated/images/exam/mock-page-3.svg",
+          company: "server/generated/images/company/mock-page-3.svg",
+          q: "26번",
+          cq: "3회 3쪽"
+        }
+      ];
+
+      const caution = "이 분석은 동일 문항 출제를 의미하지 않으며, 실제 시험에서 체감 가능한 연계 요소를 분석한 것입니다.";
+
+      function highlights(caseNo, side) {
+        const shift = side === "exam" ? 0 : 4;
+        return [
+          { type: "box", color: caseNo === 1 ? "red" : "blue", x: 10 + shift, y: 18, w: 72, h: 16 },
+          { type: "underline", color: "yellow", x: 13, y: 39 + shift, w: 62, h: 5 },
+          { type: "check", color: "green", x: 70, y: 72, w: 8, h: 8, text: "✓" },
+          { type: "note", color: "gray", x: 15, y: 82, w: 45, h: 7, text: "배경지식 참고" }
+        ];
+      }
+
+      function renderHighlights(caseNo, side) {
+        return highlights(caseNo, side)
+          .map((h) => {
+            const style = `left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`;
+            return `<div class="hl ${h.type} ${h.color}" style="${style}">${h.text || ""}</div>`;
+          })
+          .join("");
+      }
+
+      function viewer(label, image, question, caseNo, side) {
+        return `
+          <div>
+            <div class="viewer-title">
+              <div>
+                <small>${side === "exam" ? "평가원 실제 PDF 캡처" : "회사 콘텐츠 실제 PDF 캡처"}</small>
+                <strong>${label}</strong>
+              </div>
+              <div class="question">${question}</div>
+            </div>
+            <div class="image-frame">
+              <div class="image-wrap">
+                <img src="${image}" alt="${label}" />
+                ${renderHighlights(caseNo, side)}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById("cases").innerHTML = cases
+        .map((item) => `
+          <article class="case-card">
+            <div class="case-head">
+              <div>
+                <div class="case-no">CASE ${String(item.no).padStart(2, "0")}</div>
+                <h2>${item.title}</h2>
+                <p class="case-desc">${item.desc}</p>
+              </div>
+              <div class="chips">
+                <span class="badge ${item.grade}">${item.grade}등급 · ${item.score}점</span>
+                <span class="chip">${item.hitType}</span>
+                <span class="chip">유사도 ${item.similarity}%</span>
+              </div>
+            </div>
+            <div class="compare">
+              ${viewer("6월 평가원 국어", item.exam, item.q, item.no, "exam")}
+              ${viewer("상상국어 실전 모의고사 · 3회", item.company, item.cq, item.no, "company")}
+            </div>
+            <div class="analysis">
+              <div class="analysis-box">
+                <h3>AI 분석 요약</h3>
+                <p class="body-text">${item.summary}</p>
+                <h3 style="margin-top:20px">왜 적중으로 볼 수 있는가</h3>
+                <ul>${item.points.map((p) => `<li>${p}</li>`).join("")}</ul>
+              </div>
+              <div class="benefit">
+                <h3 style="color:var(--blue)">학생 체감 효과</h3>
+                <p class="body-text">${item.benefit}</p>
+                <p class="caution">${caution}</p>
+              </div>
+            </div>
+          </article>
+        `)
+        .join("");
+    </script>
+  </body>
+</html>
