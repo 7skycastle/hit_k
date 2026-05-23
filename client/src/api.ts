@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const API_ORIGIN = "http://127.0.0.1:4000";
+const runtimeOrigin = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1:4000";
+export const API_ORIGIN = import.meta.env.VITE_API_ORIGIN || runtimeOrigin;
 
 export const api = axios.create({
   baseURL: API_ORIGIN
